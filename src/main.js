@@ -1,23 +1,20 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueFire from 'vuefire'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import firebase_config from './config/firebase.js'
+import router from './router'
+import store from './store'
+const firebase = require('./firebase.js')
 
-Vue.use(VueFire)
-firebase.initializeApp(firebase_config);
-const db = firebase.firestore()
 Vue.config.productionTip = false
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
-
-
-
-let fields = db.collection('fields').orderBy('createdAt')
-console.log(fields)
-
-
-export default db;
+// handle page reloads
+let app
+firebase.auth.onAuthStateChanged(() => {
+    if (!app) {
+        app = new Vue({
+            el: '#app',
+            router,
+            store,
+            render: h => h(App)
+        }).$mount('#app')
+    }
+})

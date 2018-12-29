@@ -21,11 +21,6 @@ export default {
           fields: []
       }
   },
-/*    firestore () {
-        return {
-            fields: db.collection('fields').orderBy('createdAt')
-        }
-    },*/
   props: {
       msg: String
   }
