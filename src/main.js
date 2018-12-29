@@ -8,7 +8,22 @@ Vue.config.productionTip = false
 
 // handle page reloads
 let app
-firebase.auth.onAuthStateChanged(() => {
+firebase.auth.onAuthStateChanged(user => {
+  if (!user) {
+    // realtime updates from our posts collection
+    firebase.fieldsCollection.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+        let fieldsArray = []
+
+        querySnapshot.forEach(doc => {
+            let field = doc.data()
+            field.id = doc.id
+            field.name = doc.name
+            fieldsArray.push(field)
+        })
+
+        store.commit('setFields', fieldsArray)
+    })
+  }
     if (!app) {
         app = new Vue({
             el: '#app',
