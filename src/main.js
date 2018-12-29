@@ -14,4 +14,10 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 
+
+
+let fields = db.collection('fields').orderBy('createdAt')
+console.log(fields)
+
+
 export default db;

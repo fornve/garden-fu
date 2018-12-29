@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import { db } from '../main.js'
-console.log(db)
+
 export default {
   name: 'HelloWorld',
   data () {
@@ -22,11 +21,11 @@ export default {
           fields: []
       }
   },
-    firestore () {
+/*    firestore () {
         return {
-            locations: db.collection('fields').orderBy('createdAt')
+            fields: db.collection('fields').orderBy('createdAt')
         }
-    },
+    },*/
   props: {
       msg: String
   }
