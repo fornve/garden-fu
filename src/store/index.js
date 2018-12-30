@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+const uuid = require('uuid');
 const firebase = require('../firebase.js')
 
 Vue.use(Vuex)
@@ -14,11 +15,9 @@ const store = new Vuex.Store({
             //console.log(err)
         })
     },
-    fieldsNew({ commit, state }, field ) {
-      console.log(field)
-      console.log(  firebase.db.collection('fields'))
-      firebase.db.collection('fields').doc(field.name).set(field).then(res => {
-          console.log(res)
+    fieldsNew({ commit, state }, field) {
+      field.createdAt = new Date();
+      firebase.db.collection('fields').doc(uuid()).set(field).then(() => {
       }).catch(() => {
           //console.log(err)
       })

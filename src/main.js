@@ -17,7 +17,6 @@ firebase.auth.onAuthStateChanged(user => {
         querySnapshot.forEach(doc => {
             let field = doc.data()
             field.id = doc.id
-            field.name = doc.name
             fieldsArray.push(field)
         })
 

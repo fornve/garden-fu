@@ -32,7 +32,7 @@ export default {
       console.log(e)
       console.log(this.model)
       let field = {
-        name: this.model
+        name: this.model.name.toString()
       }
       store.dispatch('fieldsNew', field)
       return false;
