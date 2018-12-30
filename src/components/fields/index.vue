@@ -3,7 +3,9 @@
     <h3>Fields Component</h3>
     <div v-if="fields.length">
       <div v-for="field in fields" :key="field.id" class="field">
-        <span>Field {{ field.id }} {{ field.name }} </span>
+        <li>
+          <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
+        </li>
       </div>
       <FieldsNew></FieldsNew>
     </div>
@@ -24,7 +26,12 @@ export default {
     }
   },*/
   computed: {
-    ...mapState(['fields'])
+    ...mapState(['fields']),
+  },
+  methods: {
+    getFieldUrl(field) {
+      return '/fields/'+ field.id;
+    }
   }
 }
 </script>
