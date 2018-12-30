@@ -2,7 +2,14 @@
 <template>
   <div class="fields-new">
     <h3>View field {{ field.name }}</h3>
-    <div></div>
+    <ul>
+      <li>
+        <router-link :to="{ path: getEditFieldUrl(field) }">Edit</router-link>
+      </li>
+      <li>
+        <a v-on:click="deleteField(field)">Delete</a>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -19,7 +26,12 @@ export default {
     field: false
   }),
   methods: {
-
+    getEditFieldUrl(field) {
+      return '/fields/edit/'+ field.id;
+    },
+    deleteField(field) {
+      console.log('deleting field')
+    }
   },
   mounted() {
     this.field = R.filter((field) => { return field.id === this.$route.params.id }, this.fields)[0];
