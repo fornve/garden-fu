@@ -13,6 +13,15 @@ const store = new Vuex.Store({
         }).catch(() => {
             //console.log(err)
         })
+    },
+    fieldsNew({ commit, state }, field ) {
+      console.log(field)
+      console.log(  firebase.db.collection('fields'))
+      firebase.db.collection('fields').doc(field.name).set(field).then(res => {
+          console.log(res)
+      }).catch(() => {
+          //console.log(err)
+      })
     }
   },
   mutations: {

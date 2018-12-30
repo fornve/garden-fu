@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Field Creation",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "attrs": {
+        "placeholder": "Field Name",
+        "title": "Please enter field name or something that makes reference"
+      }
+    }
+  },
+  "required": ["name"]
+}
