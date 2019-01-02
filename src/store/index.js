@@ -21,6 +21,13 @@ const store = new Vuex.Store({
       }).catch(() => {
           //console.log(err)
       })
+    },
+    worksNew({ commit, state }, work) {
+      work.createdAt = new Date();
+      firebase.db.collection('works').doc(uuid()).set(work).then(() => {
+      }).catch(() => {
+          //console.log(err)
+      })
     }
   },
   mutations: {
@@ -33,12 +40,16 @@ const store = new Vuex.Store({
     setUserProfile(state, val) {
         state.userProfile = val
     },
+    setWorks(state, val) {
+        state.works = val
+    },
 
   },
   state: {
     currentUser: null,
     userProfile: {},
-		fields: []
+		fields: [],
+    works: [],
   }
 })
 

@@ -33,6 +33,11 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "fields" */ './components/fields/view.vue')
     },
     {
+      path: '/works',
+      name: 'works',
+      component: () => import(/* webpackChunkName: "fields" */ './components/works/index.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './components/login/index.vue')

@@ -12,6 +12,12 @@
         <span class="md-list-item-text">Fields</span>
       </md-list-item>
     </router-link>
+    <router-link to="/works">
+      <md-list-item>
+        <md-icon>menu</md-icon>
+        <span class="md-list-item-text">Works</span>
+      </md-list-item>
+    </router-link>
     <md-list-item>
       <router-link to="/about">About</router-link>
     </md-list-item>

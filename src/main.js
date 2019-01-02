@@ -18,7 +18,7 @@ Vue.use(VueMaterial)
 let app
 firebase.auth.onAuthStateChanged(user => {
   if (!user) {
-    // realtime updates from our posts collection
+
     firebase.fieldsCollection.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
         let fieldsArray = []
 
@@ -29,7 +29,19 @@ firebase.auth.onAuthStateChanged(user => {
         })
 
         store.commit('setFields', fieldsArray)
-    })
+    });
+
+    firebase.worksCollection.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+        let worksArray = []
+
+        querySnapshot.forEach(doc => {
+            let work = doc.data()
+            work.id = doc.id
+            worksArray.push(work)
+        })
+
+        store.commit('setWorks', worksArray)
+    });
   }
     if (!app) {
         app = new Vue({
