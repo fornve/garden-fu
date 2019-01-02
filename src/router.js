@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import firebase from 'firebase'
+import store from './store'
+import registerListeners from './services/listeners/register'
 
 Vue.use(Router)
 
@@ -65,7 +67,15 @@ router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
     const currentUser = firebase.auth().currentUser
 
-    console.log('Current user: '+ JSON.stringify(currentUser));
+    if(currentUser) {
+      if(!store.state.currentUser || store.state.currentUser.uid !== currentUser.uid) {
+        console.log('Setting up user');
+        store.commit('setCurrentUser', currentUser)
+        console.log(store.state.currentUser);
+        registerListeners(firebase)
+      }
+    }
+
     if (requiresAuth && !currentUser) {
         next('/login')
     } else if (requiresAuth && currentUser) {

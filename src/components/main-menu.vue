@@ -6,29 +6,40 @@
         <span class="md-list-item-text">Home</span>
       </md-list-item>
     </router-link>
-    <router-link to="/fields">
+    <div v-if="currentUser">
+      <router-link to="/fields">
+        <md-list-item>
+          <md-icon>menu</md-icon>
+          <span class="md-list-item-text">Fields</span>
+        </md-list-item>
+      </router-link>
+      <router-link to="/works">
+        <md-list-item>
+          <md-icon>menu</md-icon>
+          <span class="md-list-item-text">Works</span>
+        </md-list-item>
+      </router-link>
       <md-list-item>
-        <md-icon>menu</md-icon>
-        <span class="md-list-item-text">Fields</span>
+        <router-link to="/dashboard">Dashboard</router-link>
       </md-list-item>
-    </router-link>
-    <router-link to="/works">
       <md-list-item>
-        <md-icon>menu</md-icon>
-        <span class="md-list-item-text">Works</span>
+        <router-link to="/settings">Settings</router-link>
       </md-list-item>
-    </router-link>
+    </div>
     <md-list-item>
       <router-link to="/about">About</router-link>
     </md-list-item>
     <md-list-item>
-      <router-link to="/dashboard">Dashboard</router-link>
-    </md-list-item>
-    <md-list-item>
       <router-link to="/login">Login</router-link>
-    </md-list-item>
-    <md-list-item>
-      <router-link to="/settings">Settings</router-link>
     </md-list-item>
   </md-list>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['currentUser']),
+  },
+}
+</script>

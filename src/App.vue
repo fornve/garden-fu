@@ -6,6 +6,9 @@
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">{{ $route.name }}</span>
+        <md-avatar v-if="currentUser">
+          <img v-bind:src="currentUser.photoURL" alt="Avatar">
+        </md-avatar>
       </md-app-toolbar>
 
       <md-app-drawer md-permanent="clipped">
@@ -20,12 +23,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import MainMenu from './components/main-menu.vue'
 export default {
   components: {
     MainMenu
   },
-  name: 'Reveal',
+  computed: {
+    ...mapState(['currentUser']),
+  },
   data: () => ({
     menuVisible: false
   })

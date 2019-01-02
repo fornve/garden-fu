@@ -30,6 +30,11 @@ const store = new Vuex.Store({
       })
     }
   },
+  getters: {
+    getCurrentUser: state => {
+      return state.currentUser;
+    }
+  },
   mutations: {
     setCurrentUser(state, val) {
         state.currentUser = val

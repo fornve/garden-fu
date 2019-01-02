@@ -23,6 +23,7 @@ export {
     db,
     auth,
     currentUser,
+    firebase,
     fieldsCollection,
     worksCollection,
 }
