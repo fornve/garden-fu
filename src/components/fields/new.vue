@@ -1,4 +1,3 @@
-
 <template>
   <div class="fields-new">
     <h3>New field</h3>

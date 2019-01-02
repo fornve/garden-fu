@@ -2,39 +2,14 @@
   <div id="app" class="page-container">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
+        <md-button class="md-icon-button">
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">{{ $route.name }}</span>
       </md-app-toolbar>
 
-      <md-app-drawer :md-active.sync="menuVisible">
-        <md-list>
-          <router-link to="/" v-on:click.native="menuVisible = false">
-            <md-list-item>
-              <md-icon>home</md-icon>
-              <span class="md-list-item-text">Home</span>
-            </md-list-item>
-          </router-link>
-          <router-link to="/fields" v-on:click.native="menuVisible = false">
-            <md-list-item>
-              <md-icon>menu</md-icon>
-              <span class="md-list-item-text">Fields</span>
-            </md-list-item>
-          </router-link>
-          <md-list-item>
-            <router-link to="/about">About</router-link>
-          </md-list-item>
-          <md-list-item>
-            <router-link to="/dashboard">Dashboard</router-link>
-          </md-list-item>
-          <md-list-item>
-            <router-link to="/login">Login</router-link>
-          </md-list-item>
-          <md-list-item>
-            <router-link to="/settings">Settings</router-link>
-          </md-list-item>
-        </md-list>
+      <md-app-drawer md-permanent="clipped">
+        <main-menu></main-menu>
       </md-app-drawer>
 
       <md-app-content>
@@ -45,10 +20,26 @@
 </template>
 
 <script>
+import MainMenu from './components/main-menu.vue'
 export default {
+  components: {
+    MainMenu
+  },
   name: 'Reveal',
   data: () => ({
     menuVisible: false
   })
 }
 </script>
+
+<style lang="scss" scoped>
+  .md-app {
+    border: 1px solid rgba(#000, .12);
+  }
+
+   // Demo purposes only
+  .md-drawer {
+    width: 300px;
+    max-width: calc(100vw - 125px);
+  }
+</style>
