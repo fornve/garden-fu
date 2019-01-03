@@ -1,13 +1,13 @@
 <template>
   <md-list>
-    <router-link to="/">
+    <router-link v-bind:to="{ name: 'home', params: { projectId: false }}">
       <md-list-item>
         <md-icon>home</md-icon>
         <span class="md-list-item-text">Home</span>
       </md-list-item>
     </router-link>
-    <div v-if="currentUser">
-      <router-link to="/fields">
+    <div v-if="currentProject">
+      <router-link v-bind:to="{ name: 'fields', params: { projectId: currentProject.id }}">
         <md-list-item>
           <md-icon>menu</md-icon>
           <span class="md-list-item-text">Fields</span>
@@ -27,10 +27,10 @@
       </md-list-item>
     </div>
     <md-list-item>
-      <router-link to="/about">About</router-link>
+      <router-link v-bind:to="{ name: 'about', params: { projectId: false }}">About</router-link>
     </md-list-item>
     <md-list-item>
-      <router-link to="/login">Login</router-link>
+      <router-link v-bind:to="{ name: 'login', params: { projectId: false }}">Login</router-link>
     </md-list-item>
   </md-list>
 </template>
@@ -39,7 +39,7 @@
 import { mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState(['currentUser']),
+    ...mapState(['currentUser', 'currentProject']),
   },
 }
 </script>

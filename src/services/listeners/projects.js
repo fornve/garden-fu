@@ -11,7 +11,11 @@ let createProjectForUser = function(user) {
 
     await firebase.projectsUsersCollection
       .doc(projectId + '-' + user.uid)
-      .set({ createdAt: new Date() });
+      .set({
+        createdAt: new Date(),
+        projectId: projectId,
+        userId: user.uid
+      });
 
     resolve(projectId);
   });
@@ -21,17 +25,20 @@ let projectDetector = function(user, router) {
   return new Promise((resolve, reject) => {
     // get projectId from route
     let projectId = router.app.$route.params.projectId;
-
-    if(projectId) {
+console.log(router.app.$route.params);
+    if(projectId && projectId !== 'false') {
       firebase.projectsUsersCollection
         .doc(projectId + '-' + user.uid)
         .get()
         .then((data) => {
-          resolve(data.id);
-        }).catch((error) => {
-          console.log('This user has no access to this project');
-          console.log(error)
-      })
+          if(!data.exists)
+          {
+            console.log(projectId + '-' + user.uid);
+            reject('This user has no access to this project')
+          } else {
+            resolve(data.id);
+          }
+        });
     }
     else {
       firebase.projectsUsersCollection
@@ -40,8 +47,17 @@ let projectDetector = function(user, router) {
         .limit(1)
         .get()
         .then((data) => {
+          if(!data.exists)
+          {
+            createProjectForUser(user).then((projectId) => {
+              resolve(projectId);
+            });
+          } else {
+            resolve(data.id);
+          }
 
         }).catch((error) => {
+          console.log(error)
           console.log('This user has no projects (lets create one)');
           createProjectForUser(user).then((projectId) => {
             resolve(projectId);
@@ -52,21 +68,24 @@ let projectDetector = function(user, router) {
 };
 
 let registerProject = async function(projectId) {
-    firebase.projectsCollection.doc(projectId).onSnapshot(querySnapshot => {
+  try {
+    firebase.projectsCollection.doc(projectId).onSnapshot(doc => {
+      let project = doc.data()
+      project.id = doc.id
+      project.name = doc.metadata.name;
 
-        querySnapshot.forEach(doc => {
-            let project = doc.data()
-            project.id = doc.id
-            project.name = doc.metadata.name;
-        })
-
-        store.commit('setProject', project)
+      store.commit('setCurrentProject', project)
     });
+  }
+  catch(e) {
+    console.log('Projects snapshot failed');
+    conole.log(e)
+  };
 };
 
 let unregisterProject = async function(projectId) {
 
-    store.commit('setProject', false)
+    store.commit('setCurrentProject', false)
     firebase.projectsCollection.onSnapshot(querySnapshot => {});
 
 };

@@ -4,5 +4,6 @@ export default {
 	databaseURL: "https://gardenfu.firebaseio.com",
 	projectId: "gardenfu",
 	storageBucket: "gardenfu.appspot.com",
-	messagingSenderId: "744764492347"
+	messagingSenderId: "744764492347",
+  timestampsInSnapshots: true,
 };

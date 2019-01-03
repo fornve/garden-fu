@@ -9,6 +9,7 @@ export default (router) => {
   firebase.auth.onAuthStateChanged(user => {
     if (user) {
       projectDetector(user, router).then(projectId => {
+        console.log('Current project is: '+ projectId);
         registerProject(projectId);
         registerFields(projectId);
         registerWorks(projectId);
