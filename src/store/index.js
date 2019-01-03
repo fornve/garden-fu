@@ -31,11 +31,17 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    getCurrentProject: state => {
+      return state.currentProject;
+    },
     getCurrentUser: state => {
       return state.currentUser;
     }
   },
   mutations: {
+    setCurrentProject(state, val) {
+        state.currentProject = val
+    },
     setCurrentUser(state, val) {
         state.currentUser = val
     },
@@ -48,9 +54,9 @@ const store = new Vuex.Store({
     setWorks(state, val) {
         state.works = val
     },
-
   },
   state: {
+    currentProject: null,
     currentUser: null,
     userProfile: {},
 		fields: [],

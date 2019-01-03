@@ -12,7 +12,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/:projectId',
       name: 'home',
       component: Home
     },
@@ -25,17 +25,17 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ './components/About.vue')
     },
     {
-      path: '/fields',
+      path: '/:projectId/fields',
       name: 'fields',
       component: () => import(/* webpackChunkName: "fields" */ './components/fields/index.vue')
     },
     {
-      path: '/fields/:id',
+      path: '/:projectId/fields/:id',
       name: 'field view',
       component: () => import(/* webpackChunkName: "fields" */ './components/fields/view.vue')
     },
     {
-      path: '/works',
+      path: '/:projectId/works',
       name: 'works',
       component: () => import(/* webpackChunkName: "fields" */ './components/works/index.vue')
     },
@@ -72,7 +72,8 @@ router.beforeEach((to, from, next) => {
         console.log('Setting up user');
         store.commit('setCurrentUser', currentUser)
         console.log(store.state.currentUser);
-        registerListeners(firebase)
+
+        registerListeners(router)
       }
     }
 
