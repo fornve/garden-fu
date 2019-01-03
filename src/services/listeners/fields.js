@@ -16,16 +16,16 @@ let registerFields = async function(projectId) {
     });
   }
   catch(e) {
+    // eslint-disable-no-console
     console.log('Fields snapshot failed');
-    conole.log(e)
+    // eslint-disable-no-console
+    console.log(e)
   }
 };
 
-let unregisterFields = async function(projectId) {
-
+let unregisterFields = async function() {
     store.commit('setFields', [])
-    firebase.fieldsCollection.onSnapshot(querySnapshot => {});
-
+    firebase.fieldsCollection.onSnapshot();
 };
 
 export { registerFields, unregisterFields };

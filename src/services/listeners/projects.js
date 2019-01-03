@@ -25,8 +25,9 @@ let projectDetector = function(user, router) {
   return new Promise((resolve, reject) => {
     // get projectId from route
     let projectId = router.app.$route.params.projectId;
-console.log(router.app.$route.params);
+    console.log(router.app.$route.params);
     if(projectId && projectId !== 'false') {
+      console.log('project in route '+ projectId);
       firebase.projectsUsersCollection
         .doc(projectId + '-' + user.uid)
         .get()
@@ -36,24 +37,28 @@ console.log(router.app.$route.params);
             console.log(projectId + '-' + user.uid);
             reject('This user has no access to this project')
           } else {
-            resolve(data.id);
+            resolve(projectId);
           }
         });
     }
     else {
+      console.log('no project in route');
       firebase.projectsUsersCollection
         .where('userId', '==', user.uid)
         .orderBy('createdAt')
         .limit(1)
         .get()
         .then((data) => {
-          if(!data.exists)
+          if(!data.size)
           {
+            console.log(data);
+            console.log('didnot found any projects for that user');
             createProjectForUser(user).then((projectId) => {
               resolve(projectId);
             });
           } else {
-            resolve(data.id);
+            console.log('found projects for that user');
+            resolve(data.docs[0].data().projectId);
           }
 
         }).catch((error) => {
@@ -83,10 +88,10 @@ let registerProject = async function(projectId) {
   };
 };
 
-let unregisterProject = async function(projectId) {
+let unregisterProject = async function() {
 
     store.commit('setCurrentProject', false)
-    firebase.projectsCollection.onSnapshot(querySnapshot => {});
+    firebase.projectsCollection.onSnapshot();
 
 };
 

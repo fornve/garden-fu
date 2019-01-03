@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <h3>Fields Component</h3>
-    <div v-if="fields.length">
-      <div v-for="field in fields" :key="field.id" class="field">
+    <div>
+      <div v-if="fields.length" v-for="field in fields" :key="field.id" class="field">
         <li>
           <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
         </li>

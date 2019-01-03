@@ -12,7 +12,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/:projectId',
+      path: '/',
       name: 'home',
       component: Home
     },
@@ -45,7 +45,7 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "login" */ './components/login/index.vue')
     },
     {
-      path: '/dashboard',
+      path: '/:projectId/dashboard',
       name: 'dashboard',
       component: () => import(/* webpackChunkName: "dashboard" */ './components/dashboard/index.vue'),
       meta: {

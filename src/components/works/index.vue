@@ -21,11 +21,6 @@ export default {
     WorksNew
   },
   name: 'works',
-  /*data() {
-    return {
-      fields: []
-    }
-  },*/
   computed: {
     ...mapState(['works']),
   },

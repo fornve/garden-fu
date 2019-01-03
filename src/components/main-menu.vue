@@ -13,14 +13,14 @@
           <span class="md-list-item-text">Fields</span>
         </md-list-item>
       </router-link>
-      <router-link to="/works">
+      <router-link v-bind:to="{ name: 'works', params: { projectId: currentProject.id }}">
         <md-list-item>
           <md-icon>menu</md-icon>
           <span class="md-list-item-text">Works</span>
         </md-list-item>
       </router-link>
       <md-list-item>
-        <router-link to="/dashboard">Dashboard</router-link>
+        <router-link v-bind:to="{ name: 'dashboard', params: { projectId: currentProject.id }}">Dashboard</router-link>
       </md-list-item>
       <md-list-item>
         <router-link to="/settings">Settings</router-link>

@@ -19,7 +19,7 @@ export default {
     FormSchema
   },
   computed: {
-    ...mapState(['currentUser'])
+    ...mapState(['currentUser', 'currentProject'])
   },
   data: () => ({
     schema: schema,
@@ -28,10 +28,11 @@ export default {
   methods: {
     submit (e) {
       e.preventDefault();
-      console.log(e)
-      console.log(this.model)
+
       let work = {
-        name: this.model.name.toString()
+        name: this.model.name.toString(),
+        userId: this.currentUser.uid,
+        projectId: this.currentProject.id,
       }
       store.dispatch('worksNew', work)
       return false;

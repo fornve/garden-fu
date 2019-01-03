@@ -1,3 +1,4 @@
+/* eslint-disable-no-console */
 const firebase = require('@/firebase.js')
 import store from '@/store'
 
@@ -12,21 +13,23 @@ let registerWorks = async function(projectId) {
         querySnapshot.forEach(doc => {
           let work = doc.data()
           work.id = doc.id
-          worksArray.push(field)
+          worksArray.push(work)
         })
 
         store.commit('setWorks', worksArray)
     })
   }
   catch(e) {
+    // eslint-disable-no-console
     console.log('Works snapshot failed');
-    conole.log(e)
-  };
+    // eslint-disable-no-console
+    console.log(e)
+  }
 };
 
-let unregisterWorks = async function(projectId) {
+let unregisterWorks = async function() {
   store.commit('setWorks', [])
-  firebase.worksCollection.onSnapshot(querySnapshot => {});
+  firebase.worksCollection.onSnapshot();
 };
 
 export { registerWorks, unregisterWorks };
