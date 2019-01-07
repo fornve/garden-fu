@@ -14,6 +14,18 @@ let registerFields = async function(projectId) {
 
       store.commit('setFields', fieldsArray)
     });
+
+    firebase.fieldsCollection.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+      let fieldsArray = []
+
+      querySnapshot.forEach(doc => {
+        let field = doc.data()
+        field.id = doc.id
+        fieldsArray.push(field)
+      })
+
+      store.commit('setAllFields', fieldsArray)
+    });
   }
   catch(e) {
     // eslint-disable-no-console
@@ -24,8 +36,9 @@ let registerFields = async function(projectId) {
 };
 
 let unregisterFields = async function() {
-    store.commit('setFields', [])
-    firebase.fieldsCollection.onSnapshot();
+  store.commit('setFields', [])
+  store.commit('setAllFields', [])
+  firebase.fieldsCollection.onSnapshot();
 };
 
 export { registerFields, unregisterFields };

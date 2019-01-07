@@ -6,14 +6,12 @@ const firebase = require('@/firebase.js')
 
 let projectsUsersNew = async function(projectId, userId) {
   await firebase.projectsUsersCollection
-    .doc(projectId + '-' + user.uid)
+    .doc(projectId + '-' + userId)
     .set({
       createdAt: new Date(),
       projectId: projectId,
       userId: userId,
     });
-
-  return projectId();
 };
 
 let projectsUsersGet = function(projectId, userId) {

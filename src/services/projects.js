@@ -11,7 +11,7 @@ let projectsNew = async function(userId) {
       ,
     });
 
-  return projectId();
+  return projectId;
 }
 
 export { projectsNew };

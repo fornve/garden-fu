@@ -2,15 +2,24 @@
   <div class="home">
     <h3>Fields Component</h3>
     <div>
-        <div v-if="getFields.length">
-            <div v-for="field in getFields" :key="field.id" class="field">
-                <li>
-                    <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
-                </li>
-            </div>
+      <div v-if="getFields.length">
+        <div v-for="field in getFields" :key="field.id" class="field">
+          <li>
+            <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
+          </li>
         </div>
+      </div>
       <FieldsNew></FieldsNew>
     </div>
+    <div v-if="getAllFields.length">
+      <h4>All fields</h4>
+      <div v-for="field in getAllFields" :key="field.id" class="field">
+        <li>
+          <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
+        </li>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -28,7 +37,7 @@ export default {
     }
   },*/
   computed: {
-    ...mapGetters(['getFields']),
+    ...mapGetters(['getFields', 'getAllFields']),
   },
   methods: {
     getFieldUrl(field) {
