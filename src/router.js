@@ -27,17 +27,26 @@ const router = new Router({
     {
       path: '/:projectId/fields',
       name: 'fields',
-      component: () => import(/* webpackChunkName: "fields" */ './components/fields/index.vue')
+      component: () => import(/* webpackChunkName: "fields" */ './components/fields/index.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/:projectId/fields/:id',
       name: 'field view',
-      component: () => import(/* webpackChunkName: "fields" */ './components/fields/view.vue')
+      component: () => import(/* webpackChunkName: "fields" */ './components/fields/view.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/:projectId/works',
       name: 'works',
-      component: () => import(/* webpackChunkName: "fields" */ './components/works/index.vue')
+      component: () => import(/* webpackChunkName: "fields" */ './components/works/index.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
@@ -65,15 +74,18 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
-    const currentUser = firebase.auth().currentUser
+    const currentUser = firebase.auth().currentUser;
 
     if(currentUser) {
       if(!store.state.currentUser || store.state.currentUser.uid !== currentUser.uid) {
+        // eslint-disable-next-line
         console.log('Setting up user');
         store.commit('setCurrentUser', currentUser)
+        // eslint-disable-next-line
         console.log(store.state.currentUser);
 
         registerListeners(router)
+        next();
       }
     }
 

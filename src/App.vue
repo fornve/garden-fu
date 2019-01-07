@@ -25,6 +25,9 @@
 <script>
 import { mapState } from 'vuex'
 import MainMenu from './components/main-menu.vue'
+import { registerListeners } from './services/listeners/register'
+import firebase from 'firebase'
+
 export default {
   components: {
     MainMenu
@@ -34,7 +37,22 @@ export default {
   },
   data: () => ({
     menuVisible: false
-  })
+  }),/*
+  created() {
+    console.log('app started');
+    return false;
+    const currentUser = firebase.auth().currentUser
+
+    if(currentUser) {
+      if(!this.$store.state.currentUser || this.$store.state.currentUser.uid !== currentUser.uid) {
+        console.log('Setting up user (in App.vue)');
+        this.$store.commit('setCurrentUser', currentUser)
+        console.log(store.state.currentUser);
+
+        registerListeners(this.$router)
+      }
+    }
+  }*/
 }
 </script>
 
