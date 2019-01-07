@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 const uuid = require('uuid');
 const firebase = require('../firebase.js')
 
+import fields from '../components/fields/store'
+
 Vue.use(Vuex)
 
 /* eslint-disable no-new */
@@ -15,14 +17,7 @@ const store = new Vuex.Store({
             //console.log(err)
         })
     },
-    fieldsNew({ commit, state }, field) {
-      field.createdAt = new Date();
-      firebase.db.collection('fields').doc(uuid()).set(field).then(() => {
-      }).catch(() => {
-          //console.log(err)
-      })
-    },
-    worksNew({ commit, state }, work) {
+    worksNew(work) {
       work.createdAt = new Date();
       firebase.db.collection('works').doc(uuid()).set(work).then(() => {
       }).catch(() => {
@@ -45,9 +40,6 @@ const store = new Vuex.Store({
     setCurrentUser(state, val) {
         state.currentUser = val
     },
-    setFields(state, val) {
-        state.fields = val
-    },
     setUserProfile(state, val) {
         state.userProfile = val
     },
@@ -59,8 +51,10 @@ const store = new Vuex.Store({
     currentProject: null,
     currentUser: null,
     userProfile: {},
-		fields: [],
     works: [],
+  },
+  modules: {
+    fields
   }
 })
 

@@ -2,18 +2,20 @@
   <div class="home">
     <h3>Fields Component</h3>
     <div>
-      <div v-if="fields.length" v-for="field in fields" :key="field.id" class="field">
-        <li>
-          <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
-        </li>
-      </div>
+        <div v-if="getFields.length">
+            <div v-for="field in getFields" :key="field.id" class="field">
+                <li>
+                    <router-link :to="{ path: getFieldUrl(field) }">{{ field.name }}</router-link>
+                </li>
+            </div>
+        </div>
       <FieldsNew></FieldsNew>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import FieldsNew from './new.vue'
 export default {
   components: {
@@ -26,7 +28,7 @@ export default {
     }
   },*/
   computed: {
-    ...mapState(['fields']),
+    ...mapGetters(['getFields']),
   },
   methods: {
     getFieldUrl(field) {
