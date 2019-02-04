@@ -7,8 +7,7 @@ let projectsNew = async function(userId) {
     .doc(projectId)
     .set({
       createdAt: new Date(),
-      createdByUser: userId
-      ,
+      createdByUser: userId,
     });
 
   return projectId;

@@ -1,21 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 const uuid = require('uuid');
-const firebase = require('../firebase.js')
+const { firebase, auth } = require('../firebase.js')
 
 import fields from '../components/fields/store'
+import registerListeners from "../services/listeners/register";
 
 Vue.use(Vuex)
 
 /* eslint-disable no-new */
 const store = new Vuex.Store({
   actions: {
-    fetchUserProfile({ commit, state }) {
-        firebase.usersCollection.doc(state.currentUser.uid).get().then(res => {
-            commit('setUserProfile', res.data())
-        }).catch(() => {
-            //console.log(err)
-        })
+    retrieveUser({ commit }, router) {
+      auth.onAuthStateChanged((user) => {
+        commit('setUserProfile', user)
+        registerListeners(router)
+      });
     },
     worksNew(work) {
       work.createdAt = new Date();

@@ -73,29 +73,29 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
-    const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+  const currentUser = firebase.auth().currentUser;
 
-    if(currentUser) {
-      if(!store.state.currentUser || store.state.currentUser.uid !== currentUser.uid) {
-        // eslint-disable-next-line
-        console.log('Setting up user');
-        store.commit('setCurrentUser', currentUser)
-        // eslint-disable-next-line
-        console.log(store.state.currentUser);
+  if(currentUser) {
+    if(!store.state.currentUser || store.state.currentUser.uid !== currentUser.uid) {
+      // eslint-disable-next-line
+      console.log('Setting up user');
+      store.commit('setCurrentUser', currentUser)
+      // eslint-disable-next-line
+      console.log(store.state.currentUser);
 
-        registerListeners(router)
-        next();
-      }
+      registerListeners(router)
+      next();
     }
+  }
 
-    if (requiresAuth && !currentUser) {
-        next('/login')
-    } else if (requiresAuth && currentUser) {
-        next()
-    } else {
-        next()
-    }
+  if (requiresAuth && !currentUser) {
+      next('/login')
+  } else if (requiresAuth && currentUser) {
+      next()
+  } else {
+      next()
+  }
 })
 
 export default router;

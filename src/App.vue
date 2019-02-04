@@ -6,6 +6,8 @@
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">{{ $route.name }}</span>
+
+        <span class="md-title" v-if="currentProject">{{ currentProject.id }}</span>
         <md-avatar v-if="currentUser">
           <img v-bind:src="currentUser.photoURL" alt="Avatar">
         </md-avatar>
@@ -23,36 +25,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import MainMenu from './components/main-menu.vue'
 import { registerListeners } from './services/listeners/register'
-import firebase from 'firebase'
 
 export default {
   components: {
     MainMenu
   },
   computed: {
-    ...mapState(['currentUser']),
+    ...mapState(['currentUser', 'currentProject']),
   },
   data: () => ({
     menuVisible: false
-  }),/*
+  }),
   created() {
-    console.log('app started');
-    return false;
-    const currentUser = firebase.auth().currentUser
-
-    if(currentUser) {
-      if(!this.$store.state.currentUser || this.$store.state.currentUser.uid !== currentUser.uid) {
-        console.log('Setting up user (in App.vue)');
-        this.$store.commit('setCurrentUser', currentUser)
-        console.log(store.state.currentUser);
-
-        registerListeners(this.$router)
-      }
-    }
-  }*/
+    this.retrieveUser(this.$router)
+  },
+  methods: {
+    ...mapActions(['retrieveUser']),
+  }
 }
 </script>
 
