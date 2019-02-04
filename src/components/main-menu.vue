@@ -19,19 +19,34 @@
           <span class="md-list-item-text">Works</span>
         </md-list-item>
       </router-link>
-      <md-list-item>
-        <router-link v-bind:to="{ name: 'dashboard', params: { projectId: currentProject.id }}">Dashboard</router-link>
-      </md-list-item>
-      <md-list-item>
-        <router-link to="/settings">Settings</router-link>
-      </md-list-item>
+      <router-link v-bind:to="{ name: 'dashboard', params: { projectId: currentProject.id }}">
+        <md-list-item>
+          <md-icon>menu</md-icon>
+          <span class="md-list-item-text">Dashboard</span>
+        </md-list-item>
+      </router-link>
+      <router-link to="/settings">
+        <md-list-item>
+          <md-icon>menu</md-icon>
+          <span class="md-list-item-text">Settings</span>
+        </md-list-item>
+      </router-link>
     </div>
-    <md-list-item>
-      <router-link v-bind:to="{ name: 'about', params: { projectId: false }}">About</router-link>
-    </md-list-item>
-    <md-list-item>
-      <router-link v-bind:to="{ name: 'login', params: { projectId: false }}">Login</router-link>
-    </md-list-item>
+    <div v-if="userProfile">
+      <router-link v-bind:to="{ name: 'projects' }">
+        <md-list-item>
+          <md-icon>menu</md-icon>
+          <span class="md-list-item-text">Projects</span>
+        </md-list-item>
+      </router-link>
+    </div>
+    <router-link v-bind:to="{ name: 'profile' }">
+      <md-list-item>
+        <md-icon>menu</md-icon>
+        <span class="md-list-item-text">Profile</span>
+      </md-list-item>
+    </router-link>
+
   </md-list>
 </template>
 
@@ -39,7 +54,7 @@
 import { mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState(['currentUser', 'currentProject']),
+    ...mapState(['userProfile', 'currentProject']),
   },
 }
 </script>

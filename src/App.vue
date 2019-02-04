@@ -27,7 +27,6 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import MainMenu from './components/main-menu.vue'
-import { registerListeners } from './services/listeners/register'
 
 export default {
   components: {

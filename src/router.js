@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import firebase from 'firebase'
-import store from './store'
-import registerListeners from './services/listeners/register'
 
 Vue.use(Router)
 
@@ -15,14 +13,6 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './components/About.vue')
     },
     {
       path: '/:projectId/fields',
@@ -49,9 +39,17 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import(/* webpackChunkName: "login" */ './components/login/index.vue')
+      path: '/projects',
+      name: 'projects',
+      component: () => import(/* webpackChunkName: "projects" */ './components/projects/index.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import(/* webpackChunkName: "profile" */ './components/profile/index.vue')
     },
     {
       path: '/:projectId/dashboard',
@@ -75,7 +73,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
   const currentUser = firebase.auth().currentUser;
-
+/*
   if(currentUser) {
     if(!store.state.currentUser || store.state.currentUser.uid !== currentUser.uid) {
       // eslint-disable-next-line
@@ -88,9 +86,9 @@ router.beforeEach((to, from, next) => {
       next();
     }
   }
-
+*/
   if (requiresAuth && !currentUser) {
-      next('/login')
+      next('/profile')
   } else if (requiresAuth && currentUser) {
       next()
   } else {

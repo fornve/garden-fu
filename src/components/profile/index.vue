@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    Login
+    <h2>User profile</h2>
     <div>
-      <md-button class="md-raised md-primary" v-on:click="google()">Login with google</md-button>
+      <md-button class="md-raised md-primary" v-on:click="google()" v-if="!userProfile">Login with google</md-button>
       <md-button class="md-raised md-primary" v-on:click="logout()">Logout</md-button>
     </div>
   </div>
@@ -11,9 +11,13 @@
 <script>
 import { auth, firebase } from '@/firebase.js'
 import unregisterListeners from '@/services/listeners/unregister'
+import { mapState } from 'vuex'
 
 export default {
   name: 'login',
+  computed: {
+    ...mapState(['userProfile']),
+  },
   methods: {
     google() {
       let provider = new firebase.auth.GoogleAuthProvider();
