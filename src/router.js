@@ -12,14 +12,18 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        title: 'Home',
+      }
     },
     {
       path: '/:projectId/fields',
       name: 'fields',
       component: () => import(/* webpackChunkName: "fields" */ './components/fields/index.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Fields',
       }
     },
     {
@@ -27,7 +31,8 @@ const router = new Router({
       name: 'field view',
       component: () => import(/* webpackChunkName: "fields" */ './components/fields/view.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Field',
       }
     },
     {
@@ -35,7 +40,8 @@ const router = new Router({
       name: 'works',
       component: () => import(/* webpackChunkName: "fields" */ './components/works/index.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Works',
       }
     },
     {
@@ -43,20 +49,25 @@ const router = new Router({
       name: 'projects',
       component: () => import(/* webpackChunkName: "projects" */ './components/projects/index.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Projects',
       }
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import(/* webpackChunkName: "profile" */ './components/profile/index.vue')
+      component: () => import(/* webpackChunkName: "profile" */ './components/profile/index.vue'),
+      meta: {
+        title: 'Profile',
+      }
     },
     {
       path: '/:projectId/dashboard',
       name: 'dashboard',
       component: () => import(/* webpackChunkName: "dashboard" */ './components/dashboard/index.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Dashboard'
       }
     },
     {
@@ -64,7 +75,8 @@ const router = new Router({
       name: 'settings',
       component: () => import(/* webpackChunkName: "about" */ './components/settings'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        title: 'Settings'
       }
     }
   ]
@@ -87,6 +99,9 @@ router.beforeEach((to, from, next) => {
     }
   }
 */
+
+  document.title = 'Garden-fu '+ to.meta.title;
+
   if (requiresAuth && !currentUser) {
       next('/profile')
   } else if (requiresAuth && currentUser) {

@@ -11,12 +11,15 @@
     "@formschema/native": "^2.0.0-alpha.2",
     "firebase": "^5.7.2",
     "material-design-icons": "^3.0.1",
+    "material-design-icons-iconfont": "^4.0.4",
     "ramda": "^0.26.1",
+    "roboto-fontface": "^0.10.0",
     "uuid": "^3.3.2",
     "vue": "^2.5.17",
     "vue-material": "^1.0.0-beta-10.2",
     "vue-router": "^3.0.1",
     "vuefire": "^2.0.0-alpha.20",
+    "vuetify": "^1.4.4",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

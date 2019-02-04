@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
+  <v-flex class="home">
     <h2>User profile</h2>
     <div>
-      <md-button class="md-raised md-primary" v-on:click="google()" v-if="!userProfile">Login with google</md-button>
-      <md-button class="md-raised md-primary" v-on:click="logout()">Logout</md-button>
+      <button class="md-raised md-primary" v-on:click="google()" v-if="!userProfile">Login with google</button>
+      <button class="md-raised md-primary" v-on:click="logout()">Logout</button>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script>

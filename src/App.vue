@@ -1,27 +1,25 @@
 <template>
-  <div id="app" class="page-container">
-    <md-app md-mode="reveal">
-      <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button">
-          <md-icon>menu</md-icon>
-        </md-button>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline">
+        <button>
+          <v-icon>filter_vintage</v-icon>
+        </button>
         <span class="md-title">{{ $route.name }}</span>
-
+        <v-spacer></v-spacer>
         <span class="md-title" v-if="currentProject">{{ currentProject.id }}</span>
-        <md-avatar v-if="currentUser">
+        <v-avatar v-if="currentUser">
           <img v-bind:src="currentUser.photoURL" alt="Avatar">
-        </md-avatar>
-      </md-app-toolbar>
+        </v-avatar>
+      </v-toolbar-title>
+    </v-toolbar>
 
-      <md-app-drawer md-permanent="clipped">
-        <main-menu></main-menu>
-      </md-app-drawer>
+    <v-content>
+      <main-menu></main-menu>
+      <router-view/>
+    </v-content>
 
-      <md-app-content>
-        <router-view/>
-      </md-app-content>
-    </md-app>
-  </div>
+  </v-app>
 </template>
 
 <script>
