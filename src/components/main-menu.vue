@@ -1,35 +1,35 @@
 <template>
-  <v-navigation-drawer permanent>
+  <v-navigation-drawer app clipped>
     <v-list dense class="pt-0">
       <router-link v-bind:to="{ name: 'home', params: { projectId: false }}">
         <v-list-tile>
           <v-icon>home</v-icon>
-          <span class="md-list-item-text">Home</span>
+          <span class="m">Home</span>
         </v-list-tile>
       </router-link>
       <div v-if="currentProject">
         <router-link v-bind:to="{ name: 'fields', params: { projectId: currentProject.id }}">
           <v-list-tile>
             <v-icon>menu</v-icon>
-            <span class="md-list-item-text">Fields</span>
+            <span class="">Fields</span>
           </v-list-tile>
         </router-link>
         <router-link v-bind:to="{ name: 'works', params: { projectId: currentProject.id }}">
           <v-list-tile>
             <v-icon>menu</v-icon>
-            <span class="md-list-item-text">Works</span>
+            <span class="">Works</span>
           </v-list-tile>
         </router-link>
         <router-link v-bind:to="{ name: 'dashboard', params: { projectId: currentProject.id }}">
           <v-list-tile>
             <v-icon>menu</v-icon>
-            <span class="md-list-item-text">Dashboard</span>
+            <span class="">Dashboard</span>
           </v-list-tile>
         </router-link>
         <router-link to="/settings">
           <v-list-tile>
             <v-icon>menu</v-icon>
-            <span class="md-list-item-text">Settings</span>
+            <span class="">Settings</span>
           </v-list-tile>
         </router-link>
       </div>
@@ -37,19 +37,17 @@
         <router-link v-bind:to="{ name: 'projects' }">
           <v-list-tile>
             <v-icon>menu</v-icon>
-            <span class="md-list-item-text">Projects</span>
+            <span class="">Projects</span>
           </v-list-tile>
         </router-link>
       </div>
       <router-link v-bind:to="{ name: 'profile' }">
         <v-list-tile>
           <v-icon>menu</v-icon>
-          <span class="md-list-item-text">Profile</span>
+          <span class="">Profile</span>
         </v-list-tile>
       </router-link>
     </v-list>
-
-
   </v-navigation-drawer>
 </template>
 

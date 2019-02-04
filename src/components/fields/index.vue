@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <h3>Fields Component</h3>
-    <div>
+  <v-container class="home">
+    <v-flex class="display-3">Fields Component</v-flex>
+    <v-flex>
       <div v-if="getFields.length">
         <div v-for="field in getFields" :key="field.id" class="field">
           <li>
@@ -10,7 +10,7 @@
         </div>
       </div>
       <FieldsNew></FieldsNew>
-    </div>
+    </v-flex>
     <div v-if="getAllFields.length">
       <h4>All fields</h4>
       <div v-for="field in getAllFields" :key="field.id" class="field">
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-  </div>
+  </v-container>
 </template>
 
 <script>

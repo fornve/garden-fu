@@ -1,21 +1,22 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline">
-        <button>
-          <v-icon>filter_vintage</v-icon>
-        </button>
-        <span class="md-title">{{ $route.name }}</span>
+    <v-toolbar clipped-left app>
+      <v-toolbar-side-icon><v-icon>filter_vintage</v-icon></v-toolbar-side-icon>
+      <v-toolbar-title>{{ $route.name }}<span v-if="currentProject"> - {{ currentProject.id }}</span></v-toolbar-title>
         <v-spacer></v-spacer>
-        <span class="md-title" v-if="currentProject">{{ currentProject.id }}</span>
-        <v-avatar v-if="currentUser">
-          <img v-bind:src="currentUser.photoURL" alt="Avatar">
-        </v-avatar>
-      </v-toolbar-title>
+
+      <v-toolbar-items>
+        <v-btn>
+          <v-avatar v-if="currentUser">
+            <img v-bind:src="currentUser.photoURL" alt="Avatar">
+          </v-avatar>
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
 
+    <main-menu></main-menu>
+
     <v-content>
-      <main-menu></main-menu>
       <router-view/>
     </v-content>
 

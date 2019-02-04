@@ -1,15 +1,15 @@
 <template>
-  <v-flex class="home">
-    <h2>User profile</h2>
-    <div>
-      <button class="md-raised md-primary" v-on:click="google()" v-if="!userProfile">Login with google</button>
-      <button class="md-raised md-primary" v-on:click="logout()">Logout</button>
-    </div>
-  </v-flex>
+  <v-component class="home">
+    <v-flex class="display-3">User profile</v-flex>
+    <v-flex>
+      <v-btn class="" v-on:click="google()" v-if="!userProfile">Login with google</v-btn>
+      <v-btn class="" v-on:click="logout()">Logout</v-btn>
+    </v-flex>
+  </v-component>
 </template>
 
 <script>
-import { auth, firebase } from '@/firebase.js'
+import { firebase } from '@/firebase.js'
 import unregisterListeners from '@/services/listeners/unregister'
 import { mapState } from 'vuex'
 
@@ -23,22 +23,8 @@ export default {
       let provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      firebase.auth().getRedirectResult().then(function(result) {
-        if (result.credential) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          console.log('auth success '+ token)
-        }
-        // The signed-in user info.
-        var user = result.user;
+      firebase.auth().getRedirectResult().then(() => {
       }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
         console.log('auth error')
         console.log(error)
       });

@@ -1,11 +1,11 @@
 <template>
-  <div class="works-new">
+  <v-flex class="works-new">
     <h3>New work</h3>
     <FormSchema v-bind:schema="schema" v-model="model" v-on:submit="submit">
-      <button type="submit">Create</button>
+      <v-btn type="submit">Create</v-btn>
     </FormSchema>
 
-  </div>
+  </v-flex>
 </template>
 
 <script>

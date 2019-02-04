@@ -2,7 +2,7 @@
   <div class="fields-new">
     <h3>New field</h3>
     <FormSchema v-bind:schema="schema" v-model="model" v-on:submit="submit">
-      <button type="submit">Create</button>
+      <v-btn type="submit">Create</v-btn>
     </FormSchema>
 
   </div>
@@ -19,7 +19,7 @@ export default {
     FormSchema
   },
   computed: {
-    ...mapState(['currentUser', 'currentProject'])
+    ...mapState(['userProfile', 'currentProject'])
   },
   data: () => ({
     schema: schema,
@@ -32,7 +32,7 @@ export default {
       console.log(this.model)
       let field = {
         name: this.model.name.toString(),
-        userId: this.currentUser.uid,
+        userId: this.userProfile.uid,
         projectId: this.currentProject.id,
       }
       store.dispatch('fieldsNew', field)

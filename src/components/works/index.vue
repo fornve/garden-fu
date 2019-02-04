@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <h3>Works Component</h3>
-    <div>
+  <v-component class="home">
+    <v-flex class="display-3">Works Component</v-flex>
+    <v-flex>
       <div v-if="works.length" v-for="work in works" :key="work.id" class="work">
         <li>
           <router-link :to="{ path: getWorkUrl(work) }">{{ work.name }}</router-link>
@@ -9,8 +9,8 @@
       </div>
 
       <WorksNew></WorksNew>
-    </div>
-  </div>
+    </v-flex>
+  </v-component>
 </template>
 
 <script>
