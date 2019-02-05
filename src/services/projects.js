@@ -8,6 +8,9 @@ let projectsNew = async function(userId) {
     .set({
       createdAt: new Date(),
       createdByUser: userId,
+      users: [
+        userId
+      ]
     });
 
   return projectId;

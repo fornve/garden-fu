@@ -14,18 +14,6 @@ let registerFields = async function(projectId) {
 
       store.commit('setFields', fieldsArray)
     });
-
-    firebase.fieldsCollection.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
-      let fieldsArray = []
-
-      querySnapshot.forEach(doc => {
-        let field = doc.data()
-        field.id = doc.id
-        fieldsArray.push(field)
-      })
-
-      store.commit('setAllFields', fieldsArray)
-    });
   }
   catch(e) {
     // eslint-disable-no-console

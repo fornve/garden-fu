@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const { firebase, auth } = require('../firebase.js')
 
 import fields from '../components/fields/store'
+import projects from '../components/projects/store'
 import registerListeners from "../services/listeners/register"
 import navigationDrawer from './navigation-drawer'
 Vue.use(Vuex)
@@ -55,6 +56,7 @@ const store = new Vuex.Store({
   },
   modules: {
     fields,
+    projects,
     navigationDrawer
   }
 })

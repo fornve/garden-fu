@@ -1,7 +1,6 @@
 import store from '@/store'
 const firebase = require('@/firebase.js')
 import { projectsNew } from '../projects.js'
-import { projectsUsersNew, projectsUsersGet, projectsUsersGetByUser } from '../projectsUsers.js'
 
 let createProjectForUser = function(userId) {
   return new Promise(async function(resolve) {
@@ -21,10 +20,6 @@ let projectDetector = function(user, router) {
     if(projectId && projectId !== 'false') {
       // eslint-disable-next-line
       console.log('project in route '+ projectId);
-
-      projectsUsersGet(projectId, user.uid)
-        .then(resolve(projectId))
-        .catch(reject('This user has no access to this project'))
     }
     else {
       // eslint-disable-next-line
@@ -42,14 +37,19 @@ let projectDetector = function(user, router) {
   });
 };
 
-let registerProject = async function(projectId) {
-  try {
-    firebase.projectsCollection.doc(projectId).onSnapshot(doc => {
-      let project = doc.data()
-      project.id = doc.id
-      project.name = doc.metadata.name;
 
-      store.commit('setCurrentProject', project)
+let registerProjects = async function(userId) {
+  try {
+    firebase.projectsCollection.where('users', 'array-contains', userId).orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+      let projectsArray = []
+
+      querySnapshot.forEach(doc => {
+        let project = doc.data()
+        project.id = doc.id
+        projectsArray.push(field)
+      })
+
+      store.commit('setProjects', projectsArray)
     });
   }
   catch(e) {
@@ -60,9 +60,9 @@ let registerProject = async function(projectId) {
   }
 };
 
-let unregisterProject = async function() {
+let unregisterProjects = async function() {
   store.commit('setCurrentProject', false)
   firebase.projectsCollection.onSnapshot();
 };
 
-export { projectDetector, registerProject, unregisterProject };
+export { projectDetector, registerProjects, unregisterProjects };
