@@ -1,11 +1,11 @@
 <template>
-  <div class="fields-new">
+  <v-flex class="fields-new">
     <h3>New field</h3>
     <FormSchema v-bind:schema="schema" v-model="model" v-on:submit="submit">
       <v-btn type="submit">Create</v-btn>
     </FormSchema>
 
-  </div>
+  </v-flex>
 </template>
 
 <script>
@@ -28,7 +28,9 @@ export default {
   methods: {
     submit (e) {
       e.preventDefault();
+      // eslint-disable-next-line
       console.log(e)
+      // eslint-disable-next-line
       console.log(this.model)
       let field = {
         name: this.model.name.toString(),

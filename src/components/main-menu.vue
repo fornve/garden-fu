@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer app clipped>
+  <v-navigation-drawer app clipped v-model="navigationDrawer.drawer">
     <v-list dense class="pt-0">
       <router-link v-bind:to="{ name: 'home', params: { projectId: false }}">
         <v-list-tile>
@@ -55,7 +55,7 @@
 import { mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState(['userProfile', 'currentProject']),
-  },
+    ...mapState(['userProfile', 'currentProject', 'navigationDrawer'])
+  }
 }
 </script>

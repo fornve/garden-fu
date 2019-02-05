@@ -1,16 +1,18 @@
 <template>
-  <v-component class="home">
-    <v-flex class="display-3">Works Component</v-flex>
+  <v-container class="home">
+    <v-flex class="display-1">Works Component</v-flex>
     <v-flex>
-      <div v-if="works.length" v-for="work in works" :key="work.id" class="work">
-        <li>
-          <router-link :to="{ path: getWorkUrl(work) }">{{ work.name }}</router-link>
-        </li>
+      <div v-if="works.length">
+        <div v-for="work in works" :key="work.id" class="work">
+          <li>
+            <router-link :to="{ path: getWorkUrl(work) }">{{ work.name }}</router-link>
+          </li>
+        </div>
       </div>
 
       <WorksNew></WorksNew>
     </v-flex>
-  </v-component>
+  </v-container>
 </template>
 
 <script>

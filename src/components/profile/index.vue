@@ -1,11 +1,11 @@
 <template>
-  <v-component class="home">
-    <v-flex class="display-3">User profile</v-flex>
+  <v-container class="home">
+    <v-flex class="display-1">User profile</v-flex>
     <v-flex>
       <v-btn class="" v-on:click="google()" v-if="!userProfile">Login with google</v-btn>
       <v-btn class="" v-on:click="logout()">Logout</v-btn>
     </v-flex>
-  </v-component>
+  </v-container>
 </template>
 
 <script>
@@ -25,7 +25,9 @@ export default {
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
       firebase.auth().getRedirectResult().then(() => {
       }).catch(function(error) {
+        // eslint-disable-next-line
         console.log('auth error')
+        // eslint-disable-next-line
         console.log(error)
       });
     },
@@ -35,7 +37,8 @@ export default {
         unregisterListeners()
         this.$store.commit('currentUser', null);
       }).catch(function(error) {
-        // An error happened.
+        // eslint-disable-next-line
+        console.log(error)
       });
     }
   }
