@@ -18,51 +18,7 @@ const router = new Router({
       }
     },
     {
-      path: '/:projectId/fields',
-      name: 'fields',
-      component: () => import(/* webpackChunkName: "fields" */ './components/fields/index.vue'),
-      meta: {
-        requiresAuth: true,
-        title: 'Fields',
-      }
-    },
-    {
-      path: '/:projectId/fields/:id',
-      name: 'field view',
-      component: () => import(/* webpackChunkName: "fields" */ './components/fields/view.vue'),
-      meta: {
-        requiresAuth: true,
-        title: 'Field',
-      }
-    },
-    {
-      path: '/:projectId/works',
-      name: 'works',
-      component: () => import(/* webpackChunkName: "fields" */ './components/works/index.vue'),
-      meta: {
-        requiresAuth: true,
-        title: 'Works',
-      }
-    },
-    {
-      path: '/projects',
-      name: 'projects',
-      component: () => import(/* webpackChunkName: "projects" */ './components/projects/index.vue'),
-      meta: {
-        requiresAuth: true,
-        title: 'Projects',
-      }
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: () => import(/* webpackChunkName: "profile" */ './components/profile/index.vue'),
-      meta: {
-        title: 'Profile',
-      }
-    },
-    {
-      path: '/:projectId/dashboard',
+      path: '/dashboard/:team',
       name: 'dashboard',
       component: () => import(/* webpackChunkName: "dashboard" */ './components/dashboard/index.vue'),
       meta: {

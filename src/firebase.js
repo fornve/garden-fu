@@ -11,15 +11,14 @@ const currentUser = auth.currentUser
 
 // date issue fix according to firebase
 const settings = {
-    timestampsInSnapshots: true
+  timestampsInSnapshots: true
 }
 db.settings(settings)
 
 // firebase collections
 const fieldsCollection = db.collection('fields')
-const projectsCollection = db.collection('projects')
-const projectsUsersCollection = db.collection('projects_users')
-const worksCollection = db.collection('works')
+const plantsCollection = db.collection('plants')
+const teamsCollection = db.collection('teams')
 
 export {
   db,
@@ -27,7 +26,6 @@ export {
   currentUser,
   firebase,
   fieldsCollection,
-  projectsCollection,
-  projectsUsersCollection,
-  worksCollection,
+  plantsCollection,
+  teamsCollection,
 }
