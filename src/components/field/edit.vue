@@ -3,102 +3,124 @@
   <v-content class="components-field-edit">
     <h1>editing {{ id }}</h1>
 
-    <v-layout>
-      <v-flex>
-        <v-text-field
-          v-model="name"
-          label="Field name"
-          required
-        >
-        </v-text-field>
-      </v-flex>
-    </v-layout>
-
-    <v-layout>
-      <v-flex>
-        <v-text-field
-          v-model="width"
-          label="Width"
-        >
-        </v-text-field>
-      </v-flex>
-    </v-layout>
-
-    <v-layout>
-      <v-flex>
-        <v-text-field
-          v-model="height"
-          label="Height"
-        >
-        </v-text-field>
-      </v-flex>
-    </v-layout>
-
-    <v-layout>
-      <v-flex>
-        <v-text-field
-          v-model="x"
-          label="X"
-        >
-        </v-text-field>
-      </v-flex>
-    </v-layout>
-
-    <v-layout>
-      <v-flex>
-        <v-text-field
-          v-model="y"
-          label="Y"
-        >
-        </v-text-field>
-      </v-flex>
-    </v-layout>
-
-
-    <v-layout>
-      <v-flex>
-        <v-btn primary @click="save">Save</v-btn>
-      </v-flex>
-    </v-layout>
+    <FormComponent :data="form" :key="formKey" />
 
   </v-content>
 
 </template>
 
 <script lang="js">
+  import FormComponent from '@/helpers/form'
+  import uuid from 'uuid'
+  import { mapActions, mapGetters } from 'vuex'
+  import { fieldsCollection } from '@/firebase'
+
   export default  {
-    props: ['id'],
+    components: {
+      FormComponent
+    },
+    props: ['id', 'team'],
     mounted() {
-      this.field = this.fields.getField(this.id)
-      if(!this.field.metadata.createdBy) {
-        this.field.metadata.createdBy = {
-          id: this.user.user.id,
-          displayName: this.user.user.displayName,
+      let index = this.fields.findIndex(x => x.id === this.id)
+
+      if(index > -1) {
+        this.field = state.fields[index]
+      } else {
+        this.field = {
+          id: this.id,
+          metadata: {
+            createdAt: new Date(),
+            team: this.team
+          }
         }
       }
+
+      console.log(this.field)
+      if(!this.field.metadata.createdBy) {
+        this.field.metadata.createdBy = {
+          id: this.user.uid,
+          displayName: this.user.displayName,
+        }
+      }
+
+      this.form = {
+        fields: [
+          {
+            name: 'name',
+            label: 'Field name',
+            focus: true,
+            type: 'text',
+            value: this.field.metadata.name
+          },
+          {
+            name: 'width',
+            label: 'Field width',
+            type: 'text',
+            value: this.field.metadata.width
+          },
+          {
+            name: 'height',
+            label: 'Field height',
+            type: 'text',
+            value: this.field.metadata.height
+          },
+          {
+            name: 'x',
+            label: 'Top position to corner',
+            type: 'text',
+            value: this.field.metadata.x
+          },
+          {
+            name: 'y',
+            label: 'Left position to corner',
+            type: 'text',
+            value: this.field.metadata.y
+          },
+          {
+            type: 'button',
+            name: 'button',
+            text: 'Submit'
+          }
+        ],
+        validate: {
+          name: {
+            required: true,
+            minLength: 1
+          },
+          width: {
+            required: true
+          },
+          height: {
+            required: true
+          }
+        },
+        submit: (data) => {
+          this.field.metadata.name = data.name
+          this.field.metadata.width = data.width
+          this.field.metadata.height = data.height
+          this.field.metadata.x = data.x
+          this.field.metadata.y = data.y
+          fieldsCollection.doc(this.field.id).set(this.field.metadata)
+        }
+      }
+
+      this.$nextTick().then(() => {
+        this.formKey = uuid()
+      })
     },
     data() {
       return {
-        field: false,
-        name: '',
-        width: 0,
-        height: 0,
-        x: 0,
-        y: 0,
+        formKey: uuid(),
+        form: {
+          fields: []
+        }
       }
     },
     methods: {
-      ...mapGetters('fields', ['getField']),
-      save() {
-        this.field.metadata.name = this.name
-        this.field.metadata.width = this.width
-        this.field.metadata.height = this.height
-        this.field.metadata.x = this.x
-        this.field.metadata.y = this.y
-      }
     },
     computed: {
-
+      ...mapGetters('fields', ['fields']),
+      ...mapGetters('user', ['user']),
     }
 }
 </script>

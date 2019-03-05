@@ -4,21 +4,7 @@ export default {
     fields: []
   },
   getters: {
-    fields: (state) => state.fields,
-    getField: (state, id) => {
-      let index = state.fields.findIndex(x => x.id === id)
-
-      if(index > -1) {
-        return state.fields[index]
-      }
-
-      return {
-        id: id,
-        metadata: {
-          createdAt: new Date()
-        }
-      }
-    }
+    fields: (state) => state.fields
   },
   mutations: {
     addField: (state, item) => {
@@ -34,5 +20,5 @@ export default {
         }
       }
     }
-  }
+  },
 }

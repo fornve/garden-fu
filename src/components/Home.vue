@@ -9,14 +9,30 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
+import { teamsCollection } from "../firebase";
 import uuid from 'uuid'
 export default {
   name: 'home',
+  computed: {
+    ...mapGetters('user', ['user'])
+  },
   methods: {
     ...mapMutations('team', ['setTeam']),
     start() {
-      this.$router.push({ name: 'dashboard', params: { team: uuid() } })
+      let team = {
+        id: uuid(),
+        metadata: {
+          users: [this.user.uid],
+          createdAt: new Date(),
+          createdBy: {
+            id: this.user.uid,
+            displayName: this.user.displayName
+          }
+        }
+      }
+      teamsCollection.doc(team.id).set(team.metadata)
+      this.$router.push({ name: 'dashboard', params: { team: team.id } })
     }
   }
 }

@@ -2,15 +2,16 @@
   <v-app>
     <v-toolbar clipped-left app>
       <v-toolbar-side-icon><v-icon v-on:click="toggleNavigationDrawer">menu</v-icon></v-toolbar-side-icon>
-      <v-toolbar-side-icon><v-icon>filter_vintage</v-icon></v-toolbar-side-icon>
+      <v-toolbar-side-icon><router-link :to="{name: 'home'}"><v-icon>filter_vintage</v-icon></router-link></v-toolbar-side-icon>
       <v-toolbar-title>{{ $route.name }}<span v-if="team"> - {{ team.id }}</span></v-toolbar-title>
         <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn>
+        <v-btn v-if="user">
           <v-avatar v-if="user">
             <img v-bind:src="user.photoURL" alt="Avatar">
           </v-avatar>
         </v-btn>
+        <v-btn v-if="!user" @click="login"><v-icon>perm_identity</v-icon></v-btn>
       </v-toolbar-items>
     </v-toolbar>
 
@@ -28,7 +29,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import MainMenu from './components/main-menu.vue'
-import { retrieveUser } from './helpers/firebase-auth'
+import { retrieveUser, googleAuth } from './helpers/firebase-auth'
 
 export default {
   components: {
@@ -42,7 +43,10 @@ export default {
     menuVisible: false
   }),
   created() {
-    retrieveUser().then(this.setUser)
+    retrieveUser().then(user => {
+      this.setUser(user)
+      this.$bus.emit('user-set', user)
+    })
     this['navigationDrawer/toggle']();
   },
   methods: {
@@ -50,6 +54,9 @@ export default {
     ...mapMutations('user', ['setUser']),
     toggleNavigationDrawer() {
       this['navigationDrawer/toggle']();
+    },
+    login() {
+      googleAuth()
     }
   }
 }
