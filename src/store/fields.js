@@ -1,3 +1,4 @@
+import { fieldsCollection } from '@/firebase'
 export default {
   namespaced: true,
   state: {
@@ -21,4 +22,19 @@ export default {
       }
     }
   },
+  actions: {
+    getTeamFields: ({ commit }, teamId) => {
+      fieldsCollection
+        .where('teamId', '==', teamId)
+        .orderBy('createdAt', 'desc')
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            commit('addField', {
+              id: doc.id,
+              metadata: doc.data()
+            })
+          })
+        })
+      }
+  }
 }

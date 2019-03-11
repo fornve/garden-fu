@@ -24,26 +24,29 @@ let teamDetector = function(user) {
   });
 };
 
-let teamsGetByUser = async function(userId) {
-  let snap = await firebase
-    .teamsCollection
-    .where('users', 'array-contains', userId)
-    .orderBy('createdAt', 'asc')
-    .limit(1)
-    .get()
-    .then()
+let teamsGetByUser = function(userId) {
+  return new Promise(async function(resolve, reject) {
+    let snap = await firebase
+      .teamsCollection
+      .where('users', 'array-contains', userId)
+      .orderBy('createdAt', 'asc')
+      .limit(1)
+      .get()
+      .then()
+console.log(snap)
+    if(snap.size < 1) {
+      return reject()
+    }
 
-  if(snap.size < 1) {
-    return false
-  }
-
-  let team = {}
-  snap.forEach(doc => {
-    team.id = doc.id
-    team.metadata = doc.data()
+    let team = {}
+    snap.forEach(doc => {
+      team.id = doc.id
+      team.metadata = doc.data()
+    })
+console.log(team)
+    resolve(team)
   })
 
-  return team
 }
 
 let registerTeams = async function(userId) {

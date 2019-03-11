@@ -12,21 +12,12 @@
 import { fieldsCollection} from "../../firebase";
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
-  mounted() {
-    /*this.getFields(this.team.id)
-    this.listener = fieldsCollection
-      .where('team', '==', this.team.id)
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(snap => {
-        snap.docChanges().forEach(change => {
-          let field = {
-            id: change.doc.id,
-            metadata: change.doc.data()
-          }
-
-          this.addField(field)
-        })
-      })*/
+  watch: {
+    team: function(team) {
+      if(team) {
+        this.getTeamFields(team.id)
+      }
+    }
   },
   destroyed() {
     this.listener()
