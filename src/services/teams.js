@@ -1,10 +1,10 @@
 const firebase = require('@/firebase.js')
 const uuid = require('uuid');
 
-let projectsNew = async function(userId) {
-  let projectId = uuid();
-  await firebase.projectsCollection
-    .doc(projectId)
+let teamsNew = async function(userId) {
+  let teamId = uuid();
+  await firebase.teamsCollection
+    .doc(teamId)
     .set({
       createdAt: new Date(),
       createdByUser: userId,
@@ -13,7 +13,7 @@ let projectsNew = async function(userId) {
       ]
     });
 
-  return projectId;
+  return teamId;
 }
 
-export { projectsNew };
+export { teamsNew };

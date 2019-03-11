@@ -15,7 +15,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <main-menu ></main-menu>
+    <!-- main-menu ></main-menu -->
 
     <v-content>
       <v-container fluid>
@@ -28,12 +28,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import MainMenu from './components/main-menu.vue'
+//import MainMenu from './components/main-menu.vue'
 import { retrieveUser, googleAuth } from './helpers/firebase-auth'
 
 export default {
   components: {
-    MainMenu
+    //MainMenu
   },
   computed: {
     ...mapGetters('user', ['user']),

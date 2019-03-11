@@ -1,10 +1,10 @@
 export default {
   namespaced: true,
   state: {
-    team: false
+    team: false,
   },
   getters: {
-    team: (state) => state.team
+    team: (state) => state.team,
   },
   mutations: {
     setTeam: (state, value) => {

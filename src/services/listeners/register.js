@@ -1,5 +1,5 @@
 const firebase = require('@/firebase.js')
-import { registerProject, projectDetector } from './projects'
+import { registerProject, registerProject, projectDetector } from './projects'
 import { registerFields } from './fields'
 import { registerWorks } from './works'
 
@@ -8,6 +8,8 @@ export default (router) => {
 
   firebase.auth.onAuthStateChanged(user => {
     if (user) {
+      console.log('user set')
+      registerProjects();
       projectDetector(user, router).then(projectId => {
         console.log('Current project is: '+ projectId);
         registerProject(projectId);
@@ -17,7 +19,7 @@ export default (router) => {
     };
 
     if(!user) {
-      console.log('Nah, no user, listeners not registered');      
+      console.log('Nah, no user, listeners not registered');
     }
   });
 }

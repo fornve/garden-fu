@@ -5,6 +5,11 @@
     using ideas that can be found with similar systems mixed with fields management I found in Farming Simulator and
     multiplied with my ideas.</v-layout>
     <v-btn @click="start"><v-icon>start</v-icon></v-btn>
+    <ul>
+      <li v-for="team in teams" :key="team" :to="{ name: 'dashboard', params: { team: team.id } }">
+        {{ team.id }} - {{ team.name }}
+      </li>
+    </ul>
   </v-container>
 </template>
 
@@ -15,7 +20,8 @@ import uuid from 'uuid'
 export default {
   name: 'home',
   computed: {
-    ...mapGetters('user', ['user'])
+    ...mapGetters('user', ['user']),
+    ...mapGetters('teams', ['teams']),
   },
   methods: {
     ...mapMutations('team', ['setTeam']),

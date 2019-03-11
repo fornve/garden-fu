@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
+import RotationRoutes from './components/rotation/routes'
 
 Vue.use(Router)
 
@@ -8,6 +9,7 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    ...RotationRoutes,
     {
       path: '/',
       name: 'home',
@@ -17,7 +19,7 @@ const router = new Router({
       }
     },
     {
-      path: '/dashboard/:team',
+      path: '/:team',
       name: 'dashboard',
       component: () => import(/* webpackChunkName: "dashboard" */ './components/dashboard/index.vue'),
       meta: {

@@ -5,6 +5,7 @@ import fields from './fields'
 import plants from './plants'
 import navigationDrawer from './navigation-drawer'
 import team from './team'
+import teams from './teams'
 import user from './user'
 
 Vue.use(Vuex)
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
     navigationDrawer,
     plants,
     team,
+    teams,
     user,
   }
 })
