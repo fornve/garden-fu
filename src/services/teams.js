@@ -1,15 +1,18 @@
 const firebase = require('@/firebase.js')
 const uuid = require('uuid');
 
-let teamsNew = async function(userId) {
+let teamsNew = async function(user) {
   let teamId = uuid();
   await firebase.teamsCollection
     .doc(teamId)
     .set({
       createdAt: new Date(),
-      createdByUser: userId,
+      createdBy: {
+        id: user.uid,
+        name: user.displayName
+      },
       users: [
-        userId
+        user.uid
       ]
     });
 

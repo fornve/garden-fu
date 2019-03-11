@@ -1,9 +1,9 @@
 const firebase = require('@/firebase.js')
 import store from '@/store'
 
-let registerFields = async function(projectId) {
+let registerFields = async function(teamId) {
   try {
-    firebase.fieldsCollection.where('projectId', '==', projectId).orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
+    firebase.fieldsCollection.where('teamId', '==', teamId).orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
       let fieldsArray = []
 
       querySnapshot.forEach(doc => {

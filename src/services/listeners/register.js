@@ -1,25 +1,14 @@
 const firebase = require('@/firebase.js')
-import { registerProject, registerProject, projectDetector } from './projects'
+import { registerTeam, registerTeams, registerTeams, teamDetector } from './teams'
 import { registerFields } from './fields'
 import { registerWorks } from './works'
 
-export default (router) => {
-  console.log('Registering listeners');
+export const registerUserListeners(router) => {
 
-  firebase.auth.onAuthStateChanged(user => {
-    if (user) {
-      console.log('user set')
-      registerProjects();
-      projectDetector(user, router).then(projectId => {
-        console.log('Current project is: '+ projectId);
-        registerProject(projectId);
-        registerFields(projectId);
-        registerWorks(projectId);
-      });
-    };
-
-    if(!user) {
-      console.log('Nah, no user, listeners not registered');
-    }
-  });
+    registerTeams();
+    teamDetector(user, router).then(teamId => {
+      console.log('Current team is: '+ teamId);
+      registerFields(teamId);
+      registerWorks(teamId);
+    });
 }

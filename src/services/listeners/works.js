@@ -2,10 +2,10 @@
 const firebase = require('@/firebase.js')
 import store from '@/store'
 
-let registerWorks = async function(projectId) {
+let registerWorks = async function(teamId) {
   try {
     firebase.worksCollection
-      .where('projectId', '==', projectId)
+      .where('teamId', '==', teamId)
       .orderBy('createdAt', 'desc')
       .onSnapshot(querySnapshot => {
         let worksArray = []

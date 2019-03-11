@@ -2,54 +2,57 @@ import store from '@/store'
 const firebase = require('@/firebase.js')
 import { teamsNew } from '../teams.js'
 
-let createTeamForUser = function(userId) {
+let createTeamForUser = function(user) {
   return new Promise(async function(resolve) {
-    let teamId = await teamsNew(userId);
-    await teamsUsersNew(teamId, userId);
+    let teamId = await teamsNew(user);
 
     resolve(teamId);
   });
 };
 
-let teamDetector = function(user, router) {
-  return new Promise((resolve, reject) => {
-    // get teamId from route
-    let teamId = router.app.$route.params.team;
-    // eslint-disable-next-line
-    console.log(router.app.$route.params);
-    if(teamId && teamId !== 'false') {
-      // eslint-disable-next-line
-      console.log('team in route '+ team);
-    }
-    else {
-      // eslint-disable-next-line
-      console.log('no team in route');
-      teamsUsersGetByUser(user.uid)
-        .then((data) => {
-          resolve(data.data().teamId);
-        })
-        .catch(() => {
-          createteamForUser(user.uid).then((teamId) => {
-            resolve(teamId);
-          });
+let teamDetector = function(user) {
+  return new Promise((resolve) => {
+    teamsGetByUser(user.uid)
+      .then((data) => {
+        resolve(data.data().teamId);
+      })
+      .catch(() => {
+        createTeamForUser(user).then((teamId) => {
+          resolve(teamId);
         });
-    }
+      });
   });
 };
 
+let teamsGetByUser = async function(userId) {
+  let doc = firebase
+    .teamsCollection
+    .where('users', 'array-contains', userId)
+    .orderBy('createdAt', 'desc')
+    .get()
 
-let registerteams = async function(userId) {
+  if(!doc.exists) {
+    return false
+  }
+
+  let team = {
+    id: doc.id,
+    metadata: doc.data()
+  }
+
+  return team
+}
+
+let registerTeams = async function(userId) {
   try {
     firebase.teamsCollection.where('users', 'array-contains', userId).orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
-      let teamsArray = []
-
       querySnapshot.forEach(doc => {
-        let team = doc.data()
-        team.id = doc.id
-        teamsArray.push(field)
+        store.commit(
+          'addTeam',
+          { id: doc.id, metadata: doc.data() },
+          { module: 'teams' }
+        )
       })
-
-      store.commit('setteams', teamsArray)
     });
   }
   catch(e) {
@@ -60,9 +63,9 @@ let registerteams = async function(userId) {
   }
 };
 
-let unregisterteams = async function() {
+let unregisterTeams = async function() {
   store.commit('setCurrentteam', false)
   firebase.teamsCollection.onSnapshot();
 };
 
-export { teamDetector, registerteams, unregisterteams };
+export { teamDetector, registerTeams, unregisterTeams };
