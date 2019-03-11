@@ -4,8 +4,6 @@ import { registerFields } from './fields'
 import { registerWorks } from './works'
 
 export const registerUserListeners(router) => {
-
-    registerTeams();
     teamDetector(user, router).then(teamId => {
       console.log('Current team is: '+ teamId);
       registerFields(teamId);
