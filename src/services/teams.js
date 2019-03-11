@@ -1,7 +1,7 @@
 const firebase = require('@/firebase.js')
 const uuid = require('uuid');
 
-let teamsNew = async function(user) {
+const teamsNew = async function(user) {
   let teamId = uuid();
   await firebase.teamsCollection
     .doc(teamId)

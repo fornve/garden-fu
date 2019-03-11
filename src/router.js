@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/Home.vue'
 import RotationRoutes from './components/rotation/routes'
+import DashboardRoutes from './components/dashboard/routes'
 
 Vue.use(Router)
 
@@ -18,15 +19,7 @@ const router = new Router({
         title: 'Home',
       }
     },
-    {
-      path: '/:team',
-      name: 'dashboard',
-      component: () => import(/* webpackChunkName: "dashboard" */ './components/dashboard/index.vue'),
-      meta: {
-        requiresAuth: true,
-        title: 'Dashboard'
-      }
-    },
+    ...DashboardRoutes,
     {
       path: '/settings',
       name: 'settings',

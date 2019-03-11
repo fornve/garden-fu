@@ -13,10 +13,10 @@ let createTeamForUser = function(user) {
 let teamDetector = function(user) {
   return new Promise((resolve) => {
     teamsGetByUser(user.uid)
-      .then((data) => {
-        resolve(data.data().teamId);
+      .then((team) => {
+        resolve(team.id);
       })
-      .catch(() => {
+      .catch(e => {
         createTeamForUser(user).then((teamId) => {
           resolve(teamId);
         });
@@ -25,20 +25,23 @@ let teamDetector = function(user) {
 };
 
 let teamsGetByUser = async function(userId) {
-  let doc = firebase
+  let snap = await firebase
     .teamsCollection
     .where('users', 'array-contains', userId)
-    .orderBy('createdAt', 'desc')
+    .orderBy('createdAt', 'asc')
+    .limit(1)
     .get()
+    .then()
 
-  if(!doc.exists) {
+  if(snap.size < 1) {
     return false
   }
 
-  let team = {
-    id: doc.id,
-    metadata: doc.data()
-  }
+  let team = {}
+  snap.forEach(doc => {
+    team.id = doc.id
+    team.metadata = doc.data()
+  })
 
   return team
 }

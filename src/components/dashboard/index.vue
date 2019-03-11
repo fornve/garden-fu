@@ -3,7 +3,7 @@
     <v-layout>
       Dashboard of team: {{ $route.params.team }}
     </v-layout>
-    <Fields :team="$route.params.team" @setField="setField" />
+    <Fields @setField="setField" />
 
     <v-btn icon @click="addField"><v-icon>add_circle</v-icon></v-btn>
 
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Fields from './fields'
 import FieldEdit from '../field/edit'
 import uuid from 'uuid'
@@ -31,12 +32,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions('team', ['getTeam']),
     addField() {
       this.activeField = uuid()
     },
     setField(id) {
       this.activeField = id
     }
+  },
+  mounted() {
+    this.getTeam(this.$route.params.team)
   }
 }
 </script>

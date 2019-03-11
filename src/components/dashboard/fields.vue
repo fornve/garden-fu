@@ -10,12 +10,12 @@
 
 <script>
 import { fieldsCollection} from "../../firebase";
-import { mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
-  props: ['team'],
   mounted() {
+    /*this.getFields(this.team.id)
     this.listener = fieldsCollection
-      .where('team', '==', this.team)
+      .where('team', '==', this.team.id)
       .orderBy('createdAt', 'desc')
       .onSnapshot(snap => {
         snap.docChanges().forEach(change => {
@@ -26,7 +26,7 @@ export default {
 
           this.addField(field)
         })
-      })
+      })*/
   },
   destroyed() {
     this.listener()
@@ -38,12 +38,20 @@ export default {
   },
   methods: {
     ...mapMutations('fields', ['addField']),
+    ...mapActions('fields', ['getTeamFields']),
     setField(id) {
-      this.$emit('setField', id)
+      this.$router.push({
+        name: 'dashboard.field',
+        params: {
+          team: this.team.id,
+          field: id
+        }
+      })
     }
   },
   computed: {
-    ...mapGetters('fields', ['fields'])
+    ...mapGetters('fields', ['fields']),
+    ...mapGetters('team', ['team']),
   }
 }
 </script>
